@@ -22,30 +22,22 @@ fun parseTeamData(): List<TeamRaw> {
             }
         }
 }
-
-
-
 /**
  * Parser functions for reading CSV files and converting to data objects
  */
-
-
 /**
- * Parses performance.csv file and returns list of PerformanceRaw objects
- * @return List of PerformanceRaw objects
+ * Parses mentees.csv file and returns list of MenteeRaw objects
+ * @return List of MenteeRaw objects
  */
-fun parsePerformanceData(): List<PerformanceRaw> {
-    val lines = File("src/main/resources/performance.csv").readLines()
+
+fun parseMenteeData(): List<MenteeRaw> {
+    val lines = File("src/main/resources/mentees.csv").readLines()
     return lines.drop(1) // Skip header row
         .mapNotNull { line ->
             val parts = line.split(",")
-            if (parts.size >= 4) {
-                PerformanceRaw(
-                    menteeId = parts[0].trim(),
-                    submissionId = parts[1].trim(),
-                    submissionType = parts[2].trim(),
-                    score = parts[3].trim() // Keep as String per requirements
-                )
+            if (parts.size >= 3) {
+                val (id, name, team) = parts.map { it.trim() }
+                MenteeRaw(id, name, team)
             } else {
                 null // Skip invalid rows
             }
