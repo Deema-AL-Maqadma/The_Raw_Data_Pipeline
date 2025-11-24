@@ -60,26 +60,25 @@ fun parseMenteeData(): List<MenteeRaw> {
         }
 }
 
+ // Parse performance data from performance.csv
+fun parsePerformanceData(): List<PerformanceRaw>? {
+    if (!validateFile(performanceFileLines, "performance.csv")) return emptyList()
 
-
-/**
- * Parses performance.csv file and returns list of PerformanceRaw objects
- * @return List of PerformanceRaw objects
- */
-fun parsePerformanceData(): List<PerformanceRaw> {
-    val lines = File("src/main/resources/performance.csv").readLines()
-    return lines.drop(1) // Skip header row
-        .mapNotNull { line ->
+    return performanceFileLines.drop(1) // Skip header row
+        .map { line ->
             val parts = line.split(",")
             if (parts.size >= 4) {
                 PerformanceRaw(
                     menteeId = parts[0].trim(),
                     submissionId = parts[1].trim(),
                     submissionType = parts[2].trim(),
-                    score = parts[3].trim() // Keep as String per requirements
+                    score = parts[3].trim()
                 )
             } else {
-                null // Skip invalid rows
+                null
             }
         }
 }
+
+
+
