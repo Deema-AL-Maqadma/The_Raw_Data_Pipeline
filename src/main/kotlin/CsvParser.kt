@@ -18,23 +18,23 @@ fun validateFile(lines: List<String>, fileName: String): Boolean {
     }
     return true
 }
-/**
- * Parses teams.csv file and returns list of TeamRaw objects
- * @return List of TeamRaw objects
- */
-fun parseTeamData(): List<TeamRaw> {
-    val lines = File("src/main/resources/teams.csv").readLines()
-    return lines.drop(1) // Skip header row
-        .mapNotNull { lines ->
-            val parts = lines.split(",")
+
+
+// Parse team data from teams.csv
+fun parseTeamData(): List<TeamRaw>? {
+    if (!validateFile(teamFileLines, "teams.csv")) return emptyList()
+
+    return teamFileLines.drop(1) // Skip header row
+        .map { line ->
+            val teamParts = line.split(",")
             if (parts.size >= 3) {
                 TeamRaw(
-                    teamId = parts[0].trim(),
-                    teamName = parts[1].trim(),
+                    id = parts[0].trim(),
+                    name = parts[1].trim(),
                     mentorLead = parts[2].trim()
                 )
             } else {
-                null // Skip invalid rows
+                null
             }
         }
 }
@@ -66,7 +66,7 @@ fun parsePerformanceData(): List<PerformanceRaw>? {
 
     return performanceFileLines.drop(1) // Skip header row
         .map { line ->
-            val parts = line.split(",")
+            val performanceParts = line.split(",")
             if (parts.size >= 4) {
                 PerformanceRaw(
                     menteeId = parts[0].trim(),
