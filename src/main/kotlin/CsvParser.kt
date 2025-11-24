@@ -30,9 +30,9 @@ fun parseTeamData(): List<TeamRaw>? {
             val teamParts = line.split(",")
             if (teamParts.size >= 3) {
                 TeamRaw(
-                    id = parts[0].trim(),
-                    name = parts[1].trim(),
-                    mentorLead = parts[2].trim()
+                    id = teamParts[0].trim(),
+                    name = teamParts[1].trim(),
+                    mentorLead = teamParts[2].trim()
                 )
             } else {
                 null
@@ -41,17 +41,17 @@ fun parseTeamData(): List<TeamRaw>? {
 }
 
 // Parse team data from teams.csv
-fun parseTeamData(): List<TeamRaw>? {
-    if (!validateFile(teamFileLines, "teams.csv")) return emptyList()
+fun parseMenteeData(): List<MenteeRaw>? {
+    if (!validateFile(menteeFileLines, "mentees.csv")) return emptyList()
 
-    return teamFileLines.drop(1) // Skip header row
+    return menteeFileLines.drop(1) // Skip header row
         .map { line ->
-            val teammenteeParts = line.split(",")
+            val menteeParts = line.split(",")
             if (menteeParts.size >= 3) {
-                TeamRaw(
+                MenteeRaw(
                     id = menteeParts[0].trim(),
                     name = menteeParts[1].trim(),
-                    mentorLead = menteeParts[2].trim()
+                    teamId = menteeParts[2].trim()
                 )
             } else {
                 null
