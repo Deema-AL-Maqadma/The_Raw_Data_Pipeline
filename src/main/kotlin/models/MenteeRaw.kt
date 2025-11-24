@@ -1,13 +1,7 @@
 package models
-/**
- * Data class representing raw mentee data from CSV
- * @property menteeId Unique identifier for the mentee
- * @property name Name of the mentee
- * @property teamId Team identifier the mentee belongs to
- */
+// Raw mentee data from CSV
 data class MenteeRaw(
-    val menteeId: String,
+    val id: String,
     val name: String,
     val teamId: String
 )
-
